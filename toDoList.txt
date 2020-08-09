@@ -1,0 +1,3 @@
+- Implement Field Validation
+- Implement HATEOAS for representing link in response
+- Implement Internationalization : MessageSource

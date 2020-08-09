@@ -1,8 +1,12 @@
 package com.flodeus.spring.zipCode.model;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@JsonFilter("RefinedPinCodes")
 public class PinCode {
     private int id;
     private String LABEL_ID = "id";
@@ -32,8 +36,10 @@ public class PinCode {
     private String LABEL_RELATED_SUB_OFFICE = "related_sub_office";
     private String relatedHeadOffice;
     private String LABEL_RELATED_HEAD_OFFICE = "related_head_office";
+    @JsonIgnore
     private String longitude;
     private String LABEL_LONGITUDE = "longitude";
+    @JsonIgnore
     private String latitude;
     private String LABEL_LATITUDE = "latitude";
 

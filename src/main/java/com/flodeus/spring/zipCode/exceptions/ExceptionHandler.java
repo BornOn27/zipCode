@@ -19,7 +19,7 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
         ExceptionResponse response = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
-    
+
     @Override
     public final ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException e, HttpHeaders headers, HttpStatus status, WebRequest request) {
         ExceptionResponse response = new ExceptionResponse(new Date(), e.getMessage(), request.getDescription(false));
