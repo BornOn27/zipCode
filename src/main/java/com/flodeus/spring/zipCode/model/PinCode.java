@@ -6,36 +6,37 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@JsonFilter("RefinedPinCodes")
+//@JsonFilter("RefinedPinCode")
 public class PinCode {
+    @JsonIgnore
     private int id;
     private String LABEL_ID = "id";
     private String officeName;
-    private String LABEL_OFFICE_NAME = "office_name";
+    private String LABEL_OFFICE_NAME = "officeName";
     private int pinCode;
     private String LABEL_PIN_CODE = "pincode";
     private String officeType;
-    private String LABEL_OFFICE_TYPE = "office_type";
+    private String LABEL_OFFICE_TYPE = "officeType";
     private String deliveryStatus;
-    private String LABEL_DELIVERY_STATUS = "delivery_status";
+    private String LABEL_DELIVERY_STATUS = "deliveryStatus";
     private String divisionName;
-    private String LABEL_DIVISION_NAME = "division_name";
+    private String LABEL_DIVISION_NAME = "divisionName";
     private String regionName;
-    private String LABEL_REGION_NAME = "region_name";
+    private String LABEL_REGION_NAME = "regionName";
     private String circleName;
-    private String LABEL_CIRCLE_NAME = "circle_name";
+    private String LABEL_CIRCLE_NAME = "circleName";
     private String taluk;
     private String LABEL_TALUK = "taluk";
     private String districtName;
-    private String LABEL_DISTRICT_NAME = "district_name";
+    private String LABEL_DISTRICT_NAME = "districtName";
     private String stateName;
-    private String LABEL_STATE_NAME = "state_name";
+    private String LABEL_STATE_NAME = "stateName";
     private String telephone;
     private String LABEL_TELEPHONE = "telephone";
     private String relatedSubOffice;
-    private String LABEL_RELATED_SUB_OFFICE = "related_sub_office";
+    private String LABEL_RELATED_SUB_OFFICE = "relatedSubOffice";
     private String relatedHeadOffice;
-    private String LABEL_RELATED_HEAD_OFFICE = "related_head_office";
+    private String LABEL_RELATED_HEAD_OFFICE = "relatedHeadOffice";
     @JsonIgnore
     private String longitude;
     private String LABEL_LONGITUDE = "longitude";

@@ -1,10 +1,10 @@
 package com.flodeus.spring.zipCode.controller.states;
 
+import com.flodeus.spring.zipCode.dao.DaoService;
 import com.flodeus.spring.zipCode.dao.StateDaoService;
-import com.flodeus.spring.zipCode.model.City;
-import com.flodeus.spring.zipCode.model.District;
+import com.flodeus.spring.zipCode.model.Field;
 import com.flodeus.spring.zipCode.model.PinCode;
-import com.flodeus.spring.zipCode.model.State;
+import com.flodeus.spring.zipCode.src.FieldType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,49 +19,16 @@ public class StateController {
     private static final int DEFAULT_OFFSET = 0;
 
     @GetMapping(path = "/states")
-    public List<State> getAllStates() throws SQLException {
-        return new StateDaoService().all();
+    public List<Field> getAllStates() throws SQLException {
+        return new DaoService().allStates();
     }
 
     //Api List for PinCode with State
-    @GetMapping(path = "/states/name/{name}")
-    public List<PinCode> getAllForState(@PathVariable String name){
+    @GetMapping(path = "/states/{id}")
+    public List<PinCode> getAllForState(@PathVariable Integer id){
         List<PinCode> response = null;
         try {
-            response = new StateDaoService().getAllPinCodesByState(name.toLowerCase(), DEFAULT_LIMIT, DEFAULT_OFFSET);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return response;
-    }
-
-    @GetMapping(path = "/states/name/{name}", params = {"offset"})
-    public List<PinCode> getAllForStateWithOffset(@PathVariable String name,  @RequestParam int offset) {
-        List<PinCode> response = null;
-        try {
-            response = new StateDaoService().getAllPinCodesByState(name.toLowerCase(), DEFAULT_LIMIT, offset);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return response;
-    }
-
-    @GetMapping(path = "/states/name/{name}", params = {"limit"})
-    public List<PinCode> getAllForStateWithLimit(@PathVariable String name, @RequestParam int limit){
-        List<PinCode> response = null;
-        try {
-            response = new StateDaoService().getAllPinCodesByState(name.toLowerCase(), limit, DEFAULT_OFFSET);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return response;
-    }
-
-    @GetMapping(path = "/states/name/{name}", params = {"limit", "offset"})
-    public List<PinCode> getAllForStateWithParams(@PathVariable String name, @RequestParam int limit,  @RequestParam int offset) {
-        List<PinCode> response = null;
-        try {
-            response = new StateDaoService().getAllPinCodesByState(name.toLowerCase(), limit, offset);
+            response = new StateDaoService().getAllPinCodesByState(id, DEFAULT_LIMIT, DEFAULT_OFFSET);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -69,44 +36,11 @@ public class StateController {
     }
 
     //Api List for District with State
-    @GetMapping(path = "/states/{name}/districts")
-    public List<District> getAllDistrictsForState(@PathVariable String name){
-        List<District> response = null;
+    @GetMapping(path = "/states/{id}/districts")
+    public List<Field> getAllDistrictsForState(@PathVariable Integer id){
+        List<Field> response = null;
         try {
-            response = new StateDaoService().getAllDistrictsByState(name, DEFAULT_LIMIT, DEFAULT_OFFSET);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return response;
-    }
-
-    @GetMapping(path = "/states/{name}/districts", params = {"limit"})
-    public List<District> getAllDistrictsForStateWithOffset(@PathVariable String name, @RequestParam int limit, @RequestParam int offset){
-        List<District> response = null;
-        try {
-            response = new StateDaoService().getAllDistrictsByState(name, limit, DEFAULT_OFFSET);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return response;
-    }
-
-    @GetMapping(path = "/states/{name}/districts", params = {"offset"})
-    public List<District> getAllDistrictsForStateWithOffset(@PathVariable String name, @RequestParam int offset){
-        List<District> response = null;
-        try {
-            response = new StateDaoService().getAllDistrictsByState(name, DEFAULT_LIMIT, offset);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return response;
-    }
-
-    @GetMapping(path = "/states/{name}/districts", params = {"limit", "offset"})
-    public List<District> getAllDistrictsForStateWithParams(@PathVariable String name, @RequestParam int limit, @RequestParam int offset){
-        List<District> response = null;
-        try {
-            response = new StateDaoService().getAllDistrictsByState(name, limit, offset);
+            response = new DaoService().findByState(id, DEFAULT_LIMIT, DEFAULT_OFFSET, FieldType.DISTRICT_NAME);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -114,48 +48,62 @@ public class StateController {
     }
 
     //Api List for PinCode with State & District
-    @GetMapping(path = "/states/{name}/districts/{dName}")
-    public List<PinCode> getAllPinCodeForStateAndDistrict(@PathVariable String name, @PathVariable String dName){
+    @GetMapping(path = "/states/{id}/districts/{name}")
+    public List<PinCode> getAllPinCodeForStateAndDistrict(@PathVariable Integer id, @PathVariable String name){
         List<PinCode> response = null;
         try {
-            response = new StateDaoService().getAllPinCodesByStateAndDistrict(name, dName, DEFAULT_LIMIT, DEFAULT_OFFSET);
+            response = new StateDaoService().getAllPinCodesByStateAndField(id, FieldType.DISTRICT_NAME, name, DEFAULT_LIMIT, DEFAULT_OFFSET);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return response;
     }
 
-    @GetMapping(path = "/states/{name}/districts/{dName}", params = {"limit"})
-    public List<PinCode> getAllPinCodeForStateAndDistrictWithOffset(@PathVariable String name, @PathVariable String dName, @RequestParam int limit, @RequestParam int offset){
+    @GetMapping(path = "/states/{id}/districts/{name}", params = {"limit", "offset"})
+    public List<PinCode> getAllPinCodeForStateAndDistrictWithPaging(@PathVariable Integer id, @PathVariable String name, @RequestParam int limit, @RequestParam int offset){
         List<PinCode> response = null;
         try {
-            response = new StateDaoService().getAllPinCodesByStateAndDistrict(name, dName, limit, DEFAULT_OFFSET);
+            response = new StateDaoService().getAllPinCodesByStateAndField(id, FieldType.DISTRICT_NAME, name, limit, offset);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return response;
     }
 
-    @GetMapping(path = "/states/{name}/districts/{dName}", params = {"offset"})
-    public List<PinCode> getAllPinCodeForStateAndDistrictWithOffset(@PathVariable String name, @PathVariable String dName, @RequestParam int offset){
-        List<PinCode> response = null;
+    //Api List for Offices with State
+    @GetMapping(path = "/states/{id}/offices")
+    public List<Field> getAllOfficeNameForState(@PathVariable Integer id){
+        List<Field> response = null;
         try {
-            response = new StateDaoService().getAllPinCodesByStateAndDistrict(name, dName, DEFAULT_LIMIT, offset);
+            response = new DaoService().findByState(id, DEFAULT_LIMIT, DEFAULT_OFFSET, FieldType.OFFICE_NAME);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return response;
     }
 
-    @GetMapping(path = "/states/{name}/districts/{dName}", params = {"limit", "offset"})
-    public List<PinCode> getAllPinCodeForStateAndDistrictWithParams(@PathVariable String name, @PathVariable String dName, @RequestParam int limit, @RequestParam int offset){
+    //Api List for PinCode with State & OfficeName
+    @GetMapping(path = "/states/{id}/offices/{name}")
+    public List<PinCode> getAllPinCodeForStateAndOfficeName(@PathVariable Integer id, @PathVariable String name){
         List<PinCode> response = null;
         try {
-            response = new StateDaoService().getAllPinCodesByStateAndDistrict(name, dName, limit, offset);
+            response = new StateDaoService().getAllPinCodesByStateAndField(id, FieldType.OFFICE_NAME, name, DEFAULT_LIMIT, DEFAULT_OFFSET);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return response;
     }
+
+    @GetMapping(path = "/states/{id}/offices/{name}", params = {"limit", "offset"})
+    public List<PinCode> getAllPinCodeForStateAndOfficeNameWithPaging(@PathVariable Integer id, @PathVariable String name, @RequestParam int limit, @RequestParam int offset){
+        List<PinCode> response = null;
+        try {
+            response = new StateDaoService().getAllPinCodesByStateAndField(id, FieldType.OFFICE_NAME, name, limit, offset);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return response;
+    }
+
 
 }

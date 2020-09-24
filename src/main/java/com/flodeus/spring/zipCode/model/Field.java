@@ -1,6 +1,6 @@
 package com.flodeus.spring.zipCode.model;
 
-public class State {
+public class Field {
     private String name;
 
     public String getName() {
@@ -13,8 +13,6 @@ public class State {
 
     @Override
     public String toString() {
-        return "State{" +
-                "name='" + name + '\'' +
-                '}';
+        return name;
     }
 }

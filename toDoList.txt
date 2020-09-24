@@ -1,3 +1,21 @@
 - Implement Field Validation
 - Implement HATEOAS for representing link in response
 - Implement Internationalization : MessageSource
+
+
+
+- Add api for pinCode
+- Add api for divisionName
+
+
+
+- Add api for regionName
+- Add api for circleName
+- Add api for Taluk
+- Add api for telephone
+- Add Api for district
+- Add api for related SubOffice
+- Add api for related HeadOffice
+- Add every field filter inside state
+
+- Add api for dynamic search with multiple fields

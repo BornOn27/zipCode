@@ -18,8 +18,8 @@ public class FilterController {
     private static final int DEFAULT_LIMIT = 500;
     private static final int DEFAULT_OFFSET = 0;
 
-    @GetMapping(path = "/states/name/{name}/filters/{type}")
-    public MappingJacksonValue getFilteredPinCodes(@PathVariable String name, @PathVariable Integer type){
+    @GetMapping(path = "/states/{id}/filters/{type}")
+    public MappingJacksonValue getFilteredPinCodes(@PathVariable Integer id, @PathVariable Integer type){
         List<PinCode> response = null;
         SimpleBeanPropertyFilter filter = null;
         FilterProvider filterProvider = null;
@@ -27,10 +27,10 @@ public class FilterController {
 
         //TODO Add Enum for storing filter-type and return response accordingly
         try {
-            response = new StateDaoService().getAllPinCodesByState(name.toLowerCase(), DEFAULT_LIMIT, DEFAULT_OFFSET);
+            response = new StateDaoService().getAllPinCodesByState(id, DEFAULT_LIMIT, DEFAULT_OFFSET);
 
-            filter = SimpleBeanPropertyFilter.filterOutAllExcept("id", "pinCode", "stateName");
-            filterProvider = new SimpleFilterProvider().addFilter("RefinedPinCodes", filter);
+            filter = SimpleBeanPropertyFilter.filterOutAllExcept("pinCode", "stateName");
+            filterProvider = new SimpleFilterProvider().addFilter("RefinedPinCode", filter);
 
             mapping = new MappingJacksonValue(response);
             mapping.setFilters(filterProvider);

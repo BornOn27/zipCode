@@ -1,0 +1,8 @@
+List of all states - /states
+
+List of all district in a state - states/{id}/officeNames
+List of all district in a state - states/{id}/districts
+
+List of all pinCodes - /pincode/{value}
+
+Search anything with multiple-filters
